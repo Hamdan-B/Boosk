@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import TemplatePage from "./components/template.js";
+import Layout from "./components/PageLayout.js";
 
 // Google Books API key
 const GOOGLE_BOOKS_API = "AIzaSyAbLk6ES7BqijZOLID2YDlKtCcLaQKKt1c";
@@ -10,4 +10,4 @@ const GOOGLE_BOOKS_API = "AIzaSyAbLk6ES7BqijZOLID2YDlKtCcLaQKKt1c";
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 
-root.render(<TemplatePage />);
+root.render(<Layout />);
