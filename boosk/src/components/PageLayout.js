@@ -4,9 +4,15 @@ async function getDataJson(subject, startIndex, maxResults) {
   startIndex = startIndex == null ? 0 : startIndex;
   maxResults = maxResults == null ? 10 : maxResults;
   const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${subject}&startIndex=${startIndex}&maxResults=${maxResults}`;
-  const response = await fetch(url);
-
-  return response.json();
+  try {
+    const response = await fetch(url);
+    return response.json();
+  } catch (e) {
+    alert(
+      `Couldn't fetch data from the API. Please check you internet connection and try again later.\n${e}`
+    );
+    return `Null`;
+  }
 }
 
 function Layout() {
@@ -15,22 +21,15 @@ function Layout() {
   useEffect(() => {
     getDataJson("Horror", 0, 10).then((apiData) => {
       var tempBooks = [];
+      if (apiData == "Null") {
+        return tempBooks;
+      }
       apiData.items.map((val) => tempBooks.push(val));
       setBooks(tempBooks);
     });
   }, []);
 
   if (books.length > 0) {
-    const titles = () => {
-      var tempTitles = [];
-      books.forEach((book) => {
-        tempTitles.push(
-          <li key={book["id"]}>{book["volumeInfo"]["title"]}</li>
-        );
-      });
-
-      return tempTitles;
-    };
     const stuff = () => {
       var tempStuff = {
         Title: [],
