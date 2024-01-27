@@ -17,9 +17,12 @@ async function getDataJson(subject, startIndex, maxResults) {
 
 function Layout() {
   const [books, setBooks] = useState([]);
+  const [_genreInd, set_genreInd] = useState(0);
+
+  const genres = ["Fiction", "Horror", "Literature", "History", "Law"];
 
   useEffect(() => {
-    getDataJson("Horror", 0, 10).then((apiData) => {
+    getDataJson(genres[_genreInd], 0, 10).then((apiData) => {
       var tempBooks = [];
       if (apiData == "Null") {
         return tempBooks;
@@ -27,7 +30,7 @@ function Layout() {
       apiData.items.map((val) => tempBooks.push(val));
       setBooks(tempBooks);
     });
-  }, []);
+  }, [_genreInd]);
 
   if (books.length > 0) {
     const stuff = () => {
@@ -56,26 +59,41 @@ function Layout() {
 
       for (let i = 0; i < _ids.length; i++) {
         idk.push(
-          <>
-            <li
-              key={`${_ids[i]} ${0}`}
-              style={{ display: "inline-block", padding: "2%" }}
-            >
-              <ol>
-                <li key={`${_ids[i]} ${1}`}>{_titles[i]}</li>
-                <li key={`${_ids[i]} ${2}`}>{_descs[i]}</li>
-                <li key={`${_ids[i]} ${3}`}>{_ids[i]}</li>
-              </ol>
-            </li>
-          </>
+          <li
+            key={`${_ids[i].props.children}`}
+            style={{ display: "inline-block", padding: "2%" }}
+          >
+            <ol>
+              <li key={`${_ids[i]} ${1}`}>{_titles[i]}</li>
+              <li key={`${_ids[i]} ${2}`}>{_descs[i]}</li>
+              <li key={`${_ids[i]} ${3}`}>{_ids[i]}</li>
+            </ol>
+          </li>
         );
       }
 
       return idk;
     };
 
+    function setIndex() {
+      let radios = document.querySelectorAll('input[type="radio"]');
+      for (let radio of radios) {
+        if (radio.checked) {
+          if (radio.value == _genreInd) {
+            continue;
+          }
+          console.log(radio.value);
+          setBooks([]);
+          set_genreInd(parseInt(radio.value));
+        }
+      }
+    }
+
     return (
       <>
+        <button type="button" onClick={() => setIndex()}>
+          Filter
+        </button>
         <ul>{jhinga()}</ul>
       </>
     );
