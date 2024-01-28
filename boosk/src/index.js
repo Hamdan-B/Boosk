@@ -1,7 +1,7 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Layout from "./components/PageLayout.js";
+import SomeApp from "./components/GB_API.jsx";
 
 // Google Books API key
 const GOOGLE_BOOKS_API = "AIzaSyAbLk6ES7BqijZOLID2YDlKtCcLaQKKt1c";
@@ -10,4 +10,4 @@ const GOOGLE_BOOKS_API = "AIzaSyAbLk6ES7BqijZOLID2YDlKtCcLaQKKt1c";
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 
-root.render(<Layout />);
+root.render(<SomeApp />);
